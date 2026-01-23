@@ -1,4 +1,0 @@
-<?php
-$conn = mysqli_connect("localhost","root","","pengaduan_sarana");
-if(!$conn){ die("Koneksi gagal"); }
-?>
