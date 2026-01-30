@@ -55,8 +55,8 @@ while ($s = mysqli_fetch_assoc($qStatus)) {
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Histori Aspirasi</title>
-
+<title>Histori Pengaduan</title>
+<link rel="icon" type="image/x-icon" href="image/school.ico">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -171,39 +171,49 @@ table img{
 <!-- TABLE -->
 <div class="table-responsive">
 <table class="table table-bordered table-hover align-middle">
-<thead class="text-center">
+<thead class="table-primary text-center">
 <tr>
     <th>No</th>
     <th>Kategori</th>
-    <th>Isi Aspirasi</th>
+    <th>Aspirasi</th>
     <th>Status</th>
     <th>Foto</th>
+    <th>Aksi</th>
 </tr>
 </thead>
 <tbody>
 <?php
 $no = $offset + 1;
 if (mysqli_num_rows($query) > 0) {
-    while ($d = mysqli_fetch_assoc($query)) {
-        $status = strtolower($d['status']);
+while ($d = mysqli_fetch_assoc($query)) {
 ?>
 <tr>
-    <td class="text-center"><?= $no++; ?></td>
-    <td><?= $d['ket_kategori']; ?></td>
-    <td><?= $d['ket']; ?></td>
-    <td class="text-center">
-        <span class="badge-status status-<?= $status ?>">
-            <?= $d['status']; ?>
-        </span>
-    </td>
-    <td class="text-center">
-        <?= ($d['foto']!='') ? "<img src='uploads/$d[foto]'>" : '-' ?>
-    </td>
+<td class="text-center"><?= $no++ ?></td>
+<td><?= $d['ket_kategori'] ?></td>
+<td><?= $d['ket'] ?></td>
+<td class="text-center">
+<span class="badge-status status-<?= strtolower($d['status']) ?>">
+<?= $d['status'] ?>
+</span>
+</td>
+<td class="text-center">
+<?= ($d['foto']) ? "<img src='uploads/$d[foto]'>" : "-" ?>
+</td>
+<td class="text-center">
+<?php if ($d['status']=="Menunggu") { ?>
+<a href="siswa_edit_pengaduan.php?id=<?= $d['id_pelaporan'] ?>" class="btn btn-warning btn-sm">
+<i class="bi bi-pencil"></i>
+</a>
+<a href="siswa_hapus_pengaduan.php?id=<?= $d['id_pelaporan'] ?>"
+   onclick="return confirm('Yakin hapus data ini?')"
+   class="btn btn-danger btn-sm">
+<i class="bi bi-trash"></i>
+</a>
+<?php } else { echo "-"; } ?>
+</td>
 </tr>
 <?php }} else { ?>
-<tr>
-    <td colspan="5" class="text-center text-muted">Belum ada aspirasi</td>
-</tr>
+<tr><td colspan="6" class="text-center">Belum ada data</td></tr>
 <?php } ?>
 </tbody>
 </table>
