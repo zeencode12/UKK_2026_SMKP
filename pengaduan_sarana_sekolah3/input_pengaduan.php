@@ -92,7 +92,7 @@ function batalPengaduan() {
 <!-- SIDEBAR -->
 <div class="sidebar">
     <h5>🏫 Aplikasi Pengaduan</h5>
-    <a href="input_pengaduan.php">📋 input pengaduan</a>
+    <a href="input_pengaduan.php">📋 Input Pengaduan</a>
     <a href="histori.php">📋 Histori</a>
     <a href="logout.php" class="text-danger">🚪 Logout</a>
 </div>
@@ -128,3 +128,4 @@ function batalPengaduan() {
 
 </body>
 </html>
+
