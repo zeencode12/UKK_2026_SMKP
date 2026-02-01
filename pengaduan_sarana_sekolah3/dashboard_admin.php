@@ -67,7 +67,7 @@ if ($limit == 0) {
 <head>
 <meta charset="UTF-8">
 <title>Data Pengaduan</title>
-
+<link rel="icon" type="image/x-icon" href="image/school.ico">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
@@ -237,6 +237,7 @@ table img{ border-radius: 8px; }
     <th>Status</th>
     <th>Foto</th>
     <th>Aksi</th>
+    <th>Feedback</th>
 </tr>
 </thead>
 <tbody>
@@ -273,11 +274,32 @@ while($d = mysqli_fetch_assoc($q)){
     <td><?= $d['ket_kategori'] ?></td>
     <td><?= $d['lokasi'] ?></td>
     <td><?= $d['ket'] ?></td>
-    <td><span class="badge-status status-<?= $d['status'] ?>"><?= $d['status'] ?></span></td>
+    <td>
+        <span class="badge-status status-<?= $d['status'] ?>">
+            <?= $d['status'] ?>
+        </span>
+    </td>
     <td><img src="uploads/<?= $d['foto'] ?>" width="60"></td>
     <td>
         <a class="btn btn-info btn-sm" href="update_status.php?id=<?= $d['id_pelaporan'] ?>&s=Proses">Proses</a>
         <a class="btn btn-success btn-sm" href="update_status.php?id=<?= $d['id_pelaporan'] ?>&s=Selesai">Selesai</a>
+    </td>
+
+    <!-- FEEDBACK -->
+    <td>
+        <?php if ($d['status'] == 'Selesai'): ?>
+            <?php if (!empty($d['feedback'])): ?>
+                <div class="mb-1 text-success small">
+                    <?= htmlspecialchars($d['feedback']) ?>
+                </div>
+            <?php endif; ?>
+            <a href="feedback.php?id=<?= $d['id_pelaporan'] ?>"
+               class="btn btn-outline-primary btn-sm">
+               ✍️ Feedback
+            </a>
+        <?php else: ?>
+            <span class="text-muted fst-italic">-</span>
+        <?php endif; ?>
     </td>
 </tr>
 <?php } ?>
