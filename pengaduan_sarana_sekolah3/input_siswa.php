@@ -34,7 +34,7 @@ $q = mysqli_query(
 <head>
 <meta charset="UTF-8">
 <title>Input Siswa</title>
-
+<link rel="icon" type="image/x-icon" href="image/school.ico">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
