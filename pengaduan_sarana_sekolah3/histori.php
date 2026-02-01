@@ -192,9 +192,16 @@ while ($d = mysqli_fetch_assoc($query)) {
 <td><?= $d['ket_kategori'] ?></td>
 <td><?= $d['ket'] ?></td>
 <td class="text-center">
-<span class="badge-status status-<?= strtolower($d['status']) ?>">
-<?= $d['status'] ?>
-</span>
+    <span class="badge-status status-<?= strtolower($d['status']) ?>">
+        <?= $d['status'] ?>
+    </span>
+
+    <?php if (!empty($d['feedback'])) { ?>
+        <div class="mt-1 small text-muted">
+            <i class="bi bi-chat-left-text"></i>
+            <?= htmlspecialchars($d['feedback']) ?>
+        </div>
+    <?php } ?>
 </td>
 <td class="text-center">
 <?= ($d['foto']) ? "<img src='uploads/$d[foto]'>" : "-" ?>
