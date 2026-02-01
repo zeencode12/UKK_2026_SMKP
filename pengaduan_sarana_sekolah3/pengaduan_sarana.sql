@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 27, 2026 at 10:07 AM
+-- Generation Time: Feb 01, 2026 at 06:12 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -42,6 +42,20 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `aspirasi`
+--
+
+CREATE TABLE `aspirasi` (
+  `id_aspirasi` int NOT NULL,
+  `id_pelaporan` int NOT NULL,
+  `status` enum('Menunggu','Proses','Selesai') NOT NULL DEFAULT 'Menunggu',
+  `id_kategori` int NOT NULL,
+  `feedback` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `input_aspirasi`
 --
 
@@ -53,17 +67,19 @@ CREATE TABLE `input_aspirasi` (
   `lokasi` varchar(50) DEFAULT NULL,
   `ket` varchar(100) DEFAULT NULL,
   `foto` varchar(100) DEFAULT NULL,
-  `status` enum('Menunggu','Proses','Selesai') DEFAULT 'Menunggu'
+  `status` enum('Menunggu','Proses','Selesai') DEFAULT 'Menunggu',
+  `feedback` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `input_aspirasi`
 --
 
-INSERT INTO `input_aspirasi` (`id_pelaporan`, `nis`, `tgl_pengaduan`, `id_kategori`, `lokasi`, `ket`, `foto`, `status`) VALUES
-(20, 1234, '2026-01-22', 2, 'lab RPL', 'plafon rusak', 'lapangan.jpg', 'Menunggu'),
-(21, 1234, '2026-01-23', 3, 'toilet', 'kotor', 'lapangan.jpg', 'Proses'),
-(25, 244065, '2026-01-27', 5, 'ruang baca', 'buku', 'lapangan.jpg', 'Menunggu');
+INSERT INTO `input_aspirasi` (`id_pelaporan`, `nis`, `tgl_pengaduan`, `id_kategori`, `lokasi`, `ket`, `foto`, `status`, `feedback`) VALUES
+(21, 1234, '2026-01-23', 3, 'toilet', 'kotor', 'lapangan.jpg', 'Proses', NULL),
+(25, 244065, '2026-01-27', 5, 'ruang baca', 'buku', 'lapangan.jpg', 'Menunggu', NULL),
+(36, 1234, '2026-01-29', 1, 'kelas 12 a', 'cek kebersihan', 'lapangan.jpg', 'Selesai', 'sudah diselesaikan'),
+(45, 1234, '2026-01-30', 2, 'lab RPL', 'plafon rusak', 'lapangan.jpg', 'Menunggu', NULL);
 
 -- --------------------------------------------------------
 
@@ -109,8 +125,8 @@ INSERT INTO `siswa` (`nis`, `password`, `nama`, `kelas`) VALUES
 (242065, 'bcd724d15cde8c47650fda962968f102', 'Afril Angga Kurniawan', 'XII-RPL'),
 (243065, 'bcd724d15cde8c47650fda962968f102', 'Ahmad Zainur Rokhim', 'XII-RPL'),
 (244065, 'bcd724d15cde8c47650fda962968f102', 'Ainin Tadzkiroh', 'XII-RPL'),
-(245065, '5c637047e46db438f3ffb9054b4fbec0', 'naila', 'XII-RPL'),
-(246065, '52f37735d151ae92b3eaecc437fd835e', 'denis', 'XII-RPL');
+(245065, 'bcd724d15cde8c47650fda962968f102', 'naila', 'XII-RPL'),
+(246065, 'bcd724d15cde8c47650fda962968f102', 'denis', 'XII-RPL');
 
 --
 -- Indexes for dumped tables
@@ -121,6 +137,12 @@ INSERT INTO `siswa` (`nis`, `password`, `nama`, `kelas`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `aspirasi`
+--
+ALTER TABLE `aspirasi`
+  ADD PRIMARY KEY (`id_aspirasi`);
 
 --
 -- Indexes for table `input_aspirasi`
@@ -145,10 +167,16 @@ ALTER TABLE `siswa`
 --
 
 --
+-- AUTO_INCREMENT for table `aspirasi`
+--
+ALTER TABLE `aspirasi`
+  MODIFY `id_aspirasi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `input_aspirasi`
 --
 ALTER TABLE `input_aspirasi`
-  MODIFY `id_pelaporan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_pelaporan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `kategori`
