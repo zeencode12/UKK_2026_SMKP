@@ -2,6 +2,11 @@
 session_start();
 include 'config/koneksi.php';
 
+if (!isset($_SESSION['admin'])) {
+    header("Location: login_admin.php");
+    exit;
+}
+
 // ================= JUMLAH STATUS =================
 $qStatus = mysqli_query($conn, "
     SELECT status, COUNT(*) AS total
