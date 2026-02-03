@@ -2,36 +2,26 @@
 session_start();
 include 'config/koneksi.php';
 
-if (!isset($_GET['username'])) {
-    header("Location: manage_admin.php");
+if (!isset($_SESSION['admin'])) {
+    header("Location: login_admin.php");
     exit;
 }
 
-$username = mysqli_real_escape_string($conn, $_GET['username']);
+$login = $_SESSION['admin'];
+$target = $_GET['username'] ?? '';
 
-// get oldest admin
-$oldest = mysqli_fetch_assoc(
-    mysqli_query($conn, "SELECT username FROM admin ORDER BY username ASC LIMIT 1")
-);
+/* data login */
+$q1 = mysqli_query($conn,"SELECT level FROM admin WHERE username='$login'");
+$l = mysqli_fetch_assoc($q1);
 
-if ($username === $oldest['username']) {
-    echo "<script>
-        alert('Admin terlama tidak boleh dihapus!');
-        window.location='manage_admin.php';
-    </script>";
-    exit;
-}
+/* data target */
+$q2 = mysqli_query($conn,"SELECT level FROM admin WHERE username='$target'");
+$t = mysqli_fetch_assoc($q2);
 
-$delete = mysqli_query($conn, "DELETE FROM admin WHERE username = '$username'");
+if (!$t) die("Admin tidak ditemukan.");
+if ($t['level'] === 'utama') die("Admin utama tidak boleh dihapus.");
+if ($login === $target) die("Tidak boleh menghapus akun sendiri.");
+if ($l['level'] !== 'utama') die("Tidak punya hak akses.");
 
-if ($delete) {
-    echo "<script>
-        alert('Admin berhasil dihapus');
-        window.location='manage_admin.php';
-    </script>";
-} else {
-    echo "<script>
-        alert('Gagal menghapus admin');
-        history.back();
-    </script>";
-}
+mysqli_query($conn,"DELETE FROM admin WHERE username='$target'");
+header("Location: manage_admin.php");
