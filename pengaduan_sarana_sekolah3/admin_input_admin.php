@@ -2,45 +2,29 @@
 session_start();
 include 'config/koneksi.php';
 
-// pastikan form dikirim via POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (!isset($_SESSION['admin'])) {
+    header("Location: login_admin.php");
+    exit;
+}
 
-    // ambil data & amankan
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+$username = mysqli_real_escape_string($conn, $_POST['username']);
+$password = md5($_POST['password']); // MD5
+$level    = $_POST['level'];
 
-    // hash password dengan md5
-    $password_md5 = md5($password);
+/* validasi level */
+if (!in_array($level, ['utama','biasa'])) {
+    die("Level tidak valid");
+}
 
-    // cek apakah username sudah ada
-    $cek = mysqli_query($conn, "SELECT * FROM admin WHERE username='$username'");
-    if (mysqli_num_rows($cek) > 0) {
-        echo "<script>
-                alert('Username sudah digunakan!');
-                window.location='manage_admin.php';
-              </script>";
-        exit;
-    }
+/* simpan admin */
+$query = mysqli_query($conn, "
+    INSERT INTO admin (username, password, level)
+    VALUES ('$username', '$password', '$level')
+");
 
-    // insert ke database
-    $insert = mysqli_query($conn, 
-        "INSERT INTO admin (username, password) 
-         VALUES ('$username', '$password_md5')"
-    );
-
-    if ($insert) {
-        echo "<script>
-                alert('Admin berhasil ditambahkan!');
-                window.location='manage_admin.php';
-              </script>";
-    } else {
-        echo "<script>
-                alert('Gagal menambahkan admin!');
-                window.location='manage_admin.php';
-              </script>";
-    }
-
-} else {
+if ($query) {
     header("Location: manage_admin.php");
+} else {
+    echo "Gagal menambah admin";
 }
 ?>
