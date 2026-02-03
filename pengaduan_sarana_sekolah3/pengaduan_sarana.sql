@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 01, 2026 at 06:12 AM
+-- Generation Time: Feb 03, 2026 at 07:38 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -29,15 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `username` varchar(30) NOT NULL,
-  `password` varchar(255) DEFAULT NULL
+  `password` varchar(255) DEFAULT NULL,
+  `level` enum('utama','biasa') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`username`, `password`) VALUES
-('admin', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `admin` (`username`, `password`, `level`) VALUES
+('admin', '21232f297a57a5a743894a0e4a801fc3', 'utama'),
+('admin2', 'c84258e9c39059a89ab77d846ddab909', 'biasa');
 
 -- --------------------------------------------------------
 
@@ -78,7 +80,7 @@ CREATE TABLE `input_aspirasi` (
 INSERT INTO `input_aspirasi` (`id_pelaporan`, `nis`, `tgl_pengaduan`, `id_kategori`, `lokasi`, `ket`, `foto`, `status`, `feedback`) VALUES
 (21, 1234, '2026-01-23', 3, 'toilet', 'kotor', 'lapangan.jpg', 'Proses', NULL),
 (25, 244065, '2026-01-27', 5, 'ruang baca', 'buku', 'lapangan.jpg', 'Menunggu', NULL),
-(36, 1234, '2026-01-29', 1, 'kelas 12 a', 'cek kebersihan', 'lapangan.jpg', 'Selesai', 'sudah diselesaikan'),
+(36, 1234, '2026-01-29', 1, 'kelas 12 a', 'cek kebersihan', 'lapangan.jpg', 'Selesai', 'keren'),
 (45, 1234, '2026-01-30', 2, 'lab RPL', 'plafon rusak', 'lapangan.jpg', 'Menunggu', NULL);
 
 -- --------------------------------------------------------
@@ -126,7 +128,8 @@ INSERT INTO `siswa` (`nis`, `password`, `nama`, `kelas`) VALUES
 (243065, 'bcd724d15cde8c47650fda962968f102', 'Ahmad Zainur Rokhim', 'XII-RPL'),
 (244065, 'bcd724d15cde8c47650fda962968f102', 'Ainin Tadzkiroh', 'XII-RPL'),
 (245065, 'bcd724d15cde8c47650fda962968f102', 'naila', 'XII-RPL'),
-(246065, 'bcd724d15cde8c47650fda962968f102', 'denis', 'XII-RPL');
+(246065, 'bcd724d15cde8c47650fda962968f102', 'denis', 'XII-RPL'),
+(247065, 'bcd724d15cde8c47650fda962968f102', 'Wan Ahmad ', 'XII-RPL');
 
 --
 -- Indexes for dumped tables
